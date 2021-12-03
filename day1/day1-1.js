@@ -1,4 +1,3 @@
-// const jamil = 'Jamil';
 const data = `109
 117
 118
