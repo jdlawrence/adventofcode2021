@@ -66,6 +66,28 @@ const checkCols = (board) => {
   return false;
 };
 
+// Top left to bottom right diagonal
+const checkMainDiagonal = (board) => {
+ const numRows = board.length;
+  let result = true;
+  for (let i = 0; i < numRows; i++) {
+    console.log('i: ', i,board[i][i].marked);
+    result = result && board[i][i].marked;
+  }
+  return result;
+};
+
+// Top right to bottom right diagonal
+const checkAltDiagonal = (board) => {
+  const numRows = board.length;
+  let result = true;
+  for (let i = 0; i < numRows; i++) {
+    console.log('i: ', i, 'numRows - i - 1', numRows - i -1, 'marked', board[numRows - i - 1][i].marked);
+    result = result && board[i][numRows - i - 1].marked;
+  }
+  return result;
+}
+
 /* Quick tests */
 // console.log(boards[1]);
 // console.log(transformedBoards[1]);
@@ -80,10 +102,10 @@ const checkCols = (board) => {
 //   { val: '25', marked: true },
 //   { val: '23', marked: true }
 // ]));
-console.log('****', checkCols([
+console.log('****', checkAltDiagonal([
   [
-    { val: '3', marked: true },
-    { val: '15', marked: true },
+    { val: '3', marked: false },
+    { val: '15', marked: false },
     { val: '0', marked: false },
     { val: '2', marked: false },
     { val: '22', marked: true }
@@ -92,29 +114,29 @@ console.log('****', checkCols([
     { val: '9', marked: false },
     { val: '18', marked: false },
     { val: '13', marked: false },
-    { val: '17', marked: false },
-    { val: '5', marked: true }
+    { val: '17', marked: true },
+    { val: '5', marked: false }
   ],
   [
     { val: '19', marked: false },
-    { val: '8', marked: true },
+    { val: '8', marked: false },
     { val: '7', marked: true },
     { val: '25', marked: false },
-    { val: '23', marked: true }
+    { val: '23', marked: false }
   ],
   [
     { val: '20', marked: false },
     { val: '11', marked: true },
     { val: '10', marked: false },
     { val: '24', marked: false },
-    { val: '4', marked: true }
+    { val: '4', marked: false }
   ],
   [
-    { val: '14', marked: false },
-    { val: '21', marked: true },
+    { val: '14', marked: true },
+    { val: '21', marked: false },
     { val: '16', marked: false },
     { val: '12', marked: false },
-    { val: '6', marked: true }
+    { val: '6', marked: false }
   ]
 ]));
 
