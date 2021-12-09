@@ -107,45 +107,6 @@ const calcFinalValue = (board, valAsString) => {
   return getUnmarkedSum(board) * Number(valAsString);
 };
 
-
-// console.log('!#$@$', calcFinalValue([
-//   [
-//     { val: '14', marked: true },
-//     { val: '21', marked: true },
-//     { val: '17', marked: true },
-//     { val: '24', marked: true },
-//     { val: '4', marked: true }
-//   ],
-//   [
-//     { val: '10', marked: false },
-//     { val: '16', marked: false },
-//     { val: '15', marked: false },
-//     { val: '9', marked: true },
-//     { val: '19', marked: false }
-//   ],
-//   [
-//     { val: '18', marked: false },
-//     { val: '8', marked: false },
-//     { val: '23', marked: true },
-//     { val: '26', marked: false },
-//     { val: '20', marked: false }
-//   ],
-//   [
-//     { val: '22', marked: false },
-//     { val: '11', marked: true },
-//     { val: '13', marked: false },
-//     { val: '6', marked: false },
-//     { val: '5', marked: true }
-//   ],
-//   [
-//     { val: '2', marked: true },
-//     { val: '0', marked: true },
-//     { val: '12', marked: false },
-//     { val: '3', marked: false },
-//     { val: '7', marked: true }
-//   ]
-// ], '24'));
-
 const createWinnerTracker = (boards) => {
   return boards.map(board => ({ board, winner: false }));
 };
@@ -232,4 +193,40 @@ console.log('main', playGame(drawNumbers, transformedBoards));
 // ]));
 
 
-
+// console.log('!#$@$', calcFinalValue([
+//   [
+//     { val: '14', marked: true },
+//     { val: '21', marked: true },
+//     { val: '17', marked: true },
+//     { val: '24', marked: true },
+//     { val: '4', marked: true }
+//   ],
+//   [
+//     { val: '10', marked: false },
+//     { val: '16', marked: false },
+//     { val: '15', marked: false },
+//     { val: '9', marked: true },
+//     { val: '19', marked: false }
+//   ],
+//   [
+//     { val: '18', marked: false },
+//     { val: '8', marked: false },
+//     { val: '23', marked: true },
+//     { val: '26', marked: false },
+//     { val: '20', marked: false }
+//   ],
+//   [
+//     { val: '22', marked: false },
+//     { val: '11', marked: true },
+//     { val: '13', marked: false },
+//     { val: '6', marked: false },
+//     { val: '5', marked: true }
+//   ],
+//   [
+//     { val: '2', marked: true },
+//     { val: '0', marked: true },
+//     { val: '12', marked: false },
+//     { val: '3', marked: false },
+//     { val: '7', marked: true }
+//   ]
+// ], '24'));
