@@ -1,24 +1,25 @@
 const fs = require('fs');
 const {join} = require('path');
 
+const file = fs.readFileSync(join(__dirname, './input.txt'), 'utf8');
 // const file = fs.readFileSync(join(__dirname, './sample-input.txt'), 'utf8');
-const file = fs.readFileSync(join(__dirname, './sample-input.txt'), 'utf8');
 
 const allData = file.split('\n');
-
-// console.log({ allData });
 
 // create n x n size grid of empty dots
 function createGrid(size) {
   const grid = [];
-  for (let i = 0; i <= size; i++){
-    for (let j = 0; j <= size; j++) {
-      grid.push({
+  let row = [];
+  for (let i = 0; i < size; i++){
+    row = [];
+    for (let j = 0; j < size; j++) {
+      row.push({
         i,
         j,
         count: 0,
       });
     }
+    grid.push(row);
   }
 
   return grid;
@@ -36,8 +37,72 @@ function transformInput(inputStr) {
   const endSplit = firstSplit[1].split(',');
   const end = [Number(endSplit[0]), Number(endSplit[1])];
 
-  console.dir({ start, end });
+  return {
+    start,
+    end,
+  };
 }
 
+function markXChange(grid, start, end) {
+  const y = start[1];
+  if (start[0] < end[0]) {
+    for (let i = start[0]; i <= end[0]; i++) {
+      grid[i][y].count++;
+    }
+  } else {
+    for (let i = start[0]; i >= end[0]; i--) {
+      grid[i][y].count++;
+    }
+  }
+}
+
+function markYChange(grid, start, end) {
+  const x = start[0];
+  if (start[1] < end[1]) {
+    for (let j = start[1]; j <= end[1]; j++) {
+      grid[x][j].count++;
+    }
+  } else {
+    for (let j = start[1]; j >= end[1]; j--) {
+      grid[x][j].count++;
+    }
+  }
+}
+
+function markAll(grid, lines){
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].start[0] !== lines[i].end[0] && lines[i].start[1] !== lines[i].end[1]) {
+      continue;
+    } else if (lines[i].start[0] !== lines[i].end[0]) {
+      markXChange(grid, lines[i].start, lines[i].end);
+    } else {
+      markYChange(grid, lines[i].start, lines[i].end);
+    }
+  }
+}
+
+function countTwoOrMore(grid) {
+  let count = 0;
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid.length; j++) {
+      if (grid[i][j].count >= 2) {
+        count++;
+      }
+    }
+  }
+  return count;
+}
+
+const lines = allData.map(transformInput);
+
 // console.log(createGrid(3));
-console.log(transformInput('126,770 -> 732,164'));
+// console.log(transformInput('10, 0 -> 8, 0'));
+const grid = createGrid(1000);
+// const { start, end } = transformInput('9, 1 -> 5, 1');
+// markXChange(grid, start, end);
+// const { start, end } = transformInput('1, 3 -> 1, 7');
+// markYChange(grid, start, end);
+
+markAll(grid, lines);
+const total = countTwoOrMore(grid);
+console.dir({ total });
