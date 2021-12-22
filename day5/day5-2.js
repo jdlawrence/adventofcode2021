@@ -72,9 +72,9 @@ function markYChange(grid, start, end) {
 function markDiagChange(grid, start, end) {
   let x = start[0];
   let y = start[1];
-  const numChanges = Math.abs(start[0] - start[1]);
+  const numChanges = Math.abs(start[0] - end[0]);
 
-  for (let i = 0; i < numChanges; i++) {
+  for (let i = 0; i <= numChanges; i++) {
     grid[x][y].count++;
 
     if (start[0] < end[0]) {
@@ -94,7 +94,7 @@ function markDiagChange(grid, start, end) {
 function markAll(grid, lines){
   for (let i = 0; i < lines.length; i++) {
     if (lines[i].start[0] !== lines[i].end[0] && lines[i].start[1] !== lines[i].end[1]) {
-      continue;
+      markDiagChange(grid, lines[i].start, lines[i].end);
     } else if (lines[i].start[0] !== lines[i].end[0]) {
       markXChange(grid, lines[i].start, lines[i].end);
     } else {
@@ -119,12 +119,13 @@ const lines = allData.map(transformInput);
 
 // console.log(createGrid(3));
 // console.log(transformInput('10, 0 -> 8, 0'));
-const grid = createGrid(10);
-const { start, end } = transformInput('1, 1 -> 5, 5');
-markDiagChange(grid, start, end);
+const grid = createGrid(1000);
+// const { start, end } = transformInput('1, 1 -> 5, 5');
+// const { start, end } = transformInput('5, 1 -> 1, 5');
+// markDiagChange(grid, start, end);
 // const { start, end } = transformInput('1, 3 -> 1, 7');
 // markYChange(grid, start, end);
 
-// markAll(grid, lines);
-// const total = countTwoOrMore(grid);
+markAll(grid, lines);
+const total = countTwoOrMore(grid);
 console.dir({ total });
