@@ -1,8 +1,8 @@
 const fs = require('fs');
 const {join} = require('path');
 
-const file = fs.readFileSync(join(__dirname, './input.txt'), 'utf8');
-// const file = fs.readFileSync(join(__dirname, './sample-input.txt'), 'utf8');
+// const file = fs.readFileSync(join(__dirname, './input.txt'), 'utf8');
+const file = fs.readFileSync(join(__dirname, './sample-input.txt'), 'utf8');
 
 const allData = file.split(',').map(Number);
 
@@ -37,3 +37,4 @@ const calc = (numDays, input) => {
 };
 
 console.dir({ calc: calc(256, allData) });
+
