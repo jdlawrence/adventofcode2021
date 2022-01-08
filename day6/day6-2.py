@@ -1,5 +1,5 @@
-NOTE: This solution was provided by Thomas Loock, on twitter @@Brotherluii
-https://twitter.com/Brotherluii/status/1467870221834887172/photo/1
+# NOTE: This solution was provided by Thomas Loock, on twitter @@Brotherluii
+# https://twitter.com/Brotherluii/status/1467870221834887172/photo/1
 
 state = {i:0 for i in range(9)}
 
