@@ -1,7 +1,10 @@
+from pprint import pprint as pp
+
 data = open('sample-input.txt').read().strip().split('\n')
 
-test = 'dcba'
+original = [1, 2, 3, 4]
 
-test2 = test.split('').sort()
+doubled = list(map(lambda x: x + x, original))
 
-print(test2)
+for l in [{ "original": original }, { "doubled": doubled }]:
+  pp(l)
