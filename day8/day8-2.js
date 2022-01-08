@@ -5,52 +5,17 @@ const {join} = require('path');
 const file = fs.readFileSync(join(__dirname, './input.txt'), 'utf8');
 // const file = fs.readFileSync(join(__dirname, './sample-input.txt'), 'utf8');
 
-const allData = file.split('\n').map(item => item.split(' | ')[1]);
-
-// Used by Set
-function symmetricDifference(setA, setB) {
-  let _difference = new Set(setA);
-  for (let elem of setB) {
-      if (_difference.has(elem)) {
-          _difference.delete(elem);
-      } else {
-          _difference.add(elem);
-      }
-  }
-  return _difference;
-}
-
-const countUnique = (items) => {
-  let count = 0;
-  items.forEach(item => {
-    const subitems = item.split(' ');
-    // console.dir({ subitems });
-    subitems.forEach(subitem => {
-      // console.dir({ subitem, length: subitem.length });
-      if (subitem.length === 2 ||
-        subitem.length === 3 ||
-        subitem.length === 4 ||
-        subitem.length === 7
-      ) {
-        count++;
-      }
-    });
-  });
-
-  return count;
-};
+const allData = file
+  .split('\n')
+  .map(line => line.split(' ')
+                   .map(item => item.split('').sort().join(''))
+                   .join(' '))
+  .map(line => line.split(' | '))
+  .map(item => item.map(code => code.split(' ')));
 
 const isSubset = (subString, mainString) => {
   return subString.split('').every(char => mainString.indexOf(char) >= 0);
 };
-
-// let test = 'ab';
-
-let testSignalMap = [];
-
-// signalMap[test.length] = test;
-
-let dummy = 'acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab'.split(' ');
 
 const findUnique = (inputs, signalMap) => {
   inputs.forEach(input => {
@@ -104,38 +69,26 @@ const makeReverseMap = (signalMap) => {
   return result;
 };
 
-const reverseMap = makeReverseMap(testSignalMap);
-
 const decodeFinal = (inputs, reverseMap) => {
   let result = '';
-  const sortedInputs = inputs.map(input => input.split('').sort().join(''));
-  sortedInputs.forEach(input => {
-    console.log('adf', input, reverseMap[input]);
+  inputs.forEach(input => {
     result += reverseMap[input];
   });
   return parseInt(result);
 };
 
-const equalSets = (val1, val2) => {
-  const set1 = new Set(val1.split(''));
-  const set2 = new Set(val2.split(''));
-  return symmetricDifference(set1, set2).size === 0;
+const main = (data) => {
+  let total = 0;
+  data.forEach(line => {
+    let signalMap = [];
+    const [inputs, outputs] = line;
+    findUnique(inputs, signalMap);
+    findLength6(inputs, signalMap);
+    findLength5(inputs, signalMap);
+    let reverseMap = makeReverseMap(signalMap);
+    total += decodeFinal(outputs, reverseMap);
+  });
+  return total;
 };
 
-// console.dir({ set: equalSets('abcdefg', 'gfedcba') });
-
-let testCode = 'cdfeb fcadb cdfeb cdbaf'.split(' ');
-
-findUnique(dummy, testSignalMap);
-findLength6(dummy, testSignalMap);
-findLength5(dummy, testSignalMap);
-const sortedTestSignalMap = testSignalMap.map(signal => signal.split('').sort().join(''));
-let testReverseMap = makeReverseMap(sortedTestSignalMap);
-
-console.dir({ sortedTestSignalMap });
-console.dir({ testReverseMap });
-console.dir({ final: decodeFinal(testCode, testReverseMap)  });
-
-
-// console.dir({ allData: isSubset('jamil', 'jamila') });
-// console.dir({ allData: isSubset('jamilxxx', 'jamila') });
+console.dir({ main: main(allData) });
