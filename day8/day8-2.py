@@ -1,6 +1,6 @@
 from pprint import pprint as pp
 
-data = open('sample-input.txt').read().strip().split('\n')
+data = open('input.txt').read().strip().split('\n')
 
 def sortString(input):
   return ''.join(sorted(input))
@@ -17,10 +17,6 @@ def solve():
 
     total = 0;
 
-    jamil = 'abc'
-    akeem = 'abcd'
-    print(set(jamil).issubset(set(akeem)))
-    print(set(akeem).issubset(set(jamil)))
     for i in range(len(data)):
         digitMap = {};
 
@@ -49,14 +45,20 @@ def solve():
             if (len(input) == 5):
                 if (set(digitMap[1]).issubset(set(input))):
                     digitMap[3] = input
-                if (set(input).issubset(digitMap[6])):
+                elif (set(input).issubset(set(digitMap[6]))):
                     digitMap[5] = input
                 else:
                     digitMap[2] = input
-        print(digitMap)
 
-    # for i in range(len(data)):
+        reverseMap = {}
+        for key, value in digitMap.items():
+            reverseMap[value] = key
 
+        stringOutput = ''
+        for code in outputs[i]:
+           stringOutput += str(reverseMap[code])
+        total += int(stringOutput)
 
+    return total
 
-solve()
+print('answer', solve())
