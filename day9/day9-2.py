@@ -1,10 +1,7 @@
-from pprint import pprint as pp
-
 with open('input.txt') as f:
     data = f.read().strip().split('\n')
 
 transformed = [[{ 'val': int(value), 'visited': False } for value in row] for row in data]
-# Add in visited flag
 
 def solve(input):
     sum = 0
