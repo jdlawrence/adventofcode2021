@@ -1,8 +1,6 @@
 with open('sample-input.txt') as f:
     data = f.read().strip().split('\n')
 
-print(data)
-
 class Graph(object):
     def __init__(self, graph_dict=None):
         self._graph_dict = {}
@@ -57,20 +55,40 @@ class Graph(object):
                     return extended_path
         return None
 
+    def find_all_paths(self, start_vertex, end_vertex, path=[]):
+        """ find all paths from start_vertex to
+            end_vertex in graph """
+        graph = self._graph_dict
+        path = path + [start_vertex]
+        if start_vertex == end_vertex:
+            return [path]
+        if start_vertex not in graph:
+            return []
+        paths = []
+        for vertex in graph[start_vertex]:
+            if vertex != 'start':
+                if vertex.islower() and vertex not in path:
+                    extended_paths = self.find_all_paths(vertex,
+                                                     end_vertex,
+                                                     path)
+                    for p in extended_paths:
+                        paths.append(p)
+                if vertex.isupper():
+                    extended_paths = self.find_all_paths(vertex,
+                                                     end_vertex,
+                                                     path)
+                    for p in extended_paths:
+                        paths.append(p)
+        return paths
+
 
 def solve():
     graph = Graph()
-    # graph.add_vertex('start')
-    # graph.add_vertex('bc')
-    # graph.add_vertex('end')
-    # graph.add_vertex('CD')
 
     for row in data:
         v1, v2 = row.split('-')
         graph.add_edge([v1, v2])
 
-    # print(node1, node1)
-    return graph.find_path('start', 'end')
-    r = 5
+    return graph.find_all_paths('start', 'end')
 
-print(solve())
+print(len(solve()))
