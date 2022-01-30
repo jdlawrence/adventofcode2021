@@ -29,13 +29,7 @@ class Graph(object):
         paths = []
         for vertex in graph[start_vertex]:
             if vertex != 'start':
-                if vertex.islower() and vertex not in path:
-                    extended_paths = self.find_all_paths(vertex,
-                                                     end_vertex,
-                                                     path)
-                    for p in extended_paths:
-                        paths.append(p)
-                if vertex.isupper():
+                if vertex.isupper() or vertex.islower() and vertex not in path:
                     extended_paths = self.find_all_paths(vertex,
                                                      end_vertex,
                                                      path)
