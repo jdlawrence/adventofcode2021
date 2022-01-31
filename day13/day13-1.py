@@ -33,6 +33,28 @@ def solve(input):
         col, row = coord.split(',')
         grid[int(row)][int(col)] = 1
 
+    after_fold = []
+    for n in range(7):
+        row = [0] * cols
+        after_fold.append(row)
+
+    for row in range(7):
+        for col in range(cols):
+            after_fold[row][col] = grid[row][col]
+            if after_fold[row][col] == 0:
+                after_fold[row][col] = grid[14 - row][col]
+
+    after_fold2 = []
+    for n in range(7):
+        row = [0] * 5
+        after_fold2.append(row)
+
+    for row in range(7):
+        for col in range(5):
+            after_fold2[row][col] = after_fold[row][col + 5 + 1]
+            if after_fold2[row][col] == 0:
+                after_fold2[row][col] = after_fold[row][(5 - 1) - col]
+
     # print(find_size(input))
     j = 108
 
