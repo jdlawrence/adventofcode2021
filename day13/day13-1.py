@@ -1,67 +1,40 @@
 with open('sample-input.txt') as f:
     data = f.read().strip().split('\n')
 
-class Graph(object):
-    def __init__(self, graph_dict=None):
-        self._graph_dict = {}
+print(data)
 
-    def add_edge(self, edge):
-        """ assumes that edge is of type set, tuple or list;
-            between two vertices can be multiple edges!
-        """
-        edge = set(edge)
-        vertex1, vertex2 = tuple(edge)
-        for x, y in [(vertex1, vertex2), (vertex2, vertex1)]:
-            if x in self._graph_dict:
-                self._graph_dict[x].append(y)
-            else:
-                self._graph_dict[x] = [y]
+def find_size(input):
+    cols = 0
+    rows = 0
+    for row in input:
+        x, y = row.split(',')
+        if int(x) > cols:
+            cols = int(x)
+        if int(y) > rows:
+            rows = int(y)
 
-    def count_exceeded(self, path, new_vertex):
-        vertices = {}
-        small_cave_twice = False
-        for vertex in path:
-            if vertex.islower():
-                if vertex in vertices:
-                    vertices[vertex] += 1
-                    if vertices[vertex] == 2:
-                        small_cave_twice = True
-                else:
-                    vertices[vertex] = 1
+        print(x, y)
 
-        if small_cave_twice:
-            return new_vertex in path
-        else:
-            return False
+    return rows + 1, cols + 1
+def solve(input):
+    rows = 0
+    cols = 0
+    grid = []
 
-    def find_all_paths(self, start_vertex, end_vertex, path=[]):
-        """ find all paths from start_vertex to
-            end_vertex in graph """
-        graph = self._graph_dict
-        path = path + [start_vertex]
-        if start_vertex == end_vertex:
-            return [path]
-        if start_vertex not in graph:
-            return []
-        paths = []
-        for vertex in graph[start_vertex]:
-            if vertex != 'start':
-                if vertex.isupper() or vertex.islower() and not self.count_exceeded(path, vertex):
-                    extended_paths = self.find_all_paths(vertex,
-                                                     end_vertex,
-                                                     path)
-                    for p in extended_paths:
-                        paths.append(p)
-        return paths
+    rows, cols = find_size(input)
+
+    # Create grid of zeros
+    for n in range(rows):
+        row = [0] * cols
+        grid.append(row)
+
+    # mark grid
+    for coord in data:
+        col, row = coord.split(',')
+        grid[int(row)][int(col)] = 1
+
+    # print(find_size(input))
+    j = 108
 
 
-def solve():
-    graph = Graph()
-
-    for row in data:
-        v1, v2 = row.split('-')
-        graph.add_edge([v1, v2])
-
-    return graph.find_all_paths('start', 'end')
-
-print(len(solve()))
+print(solve(data))
