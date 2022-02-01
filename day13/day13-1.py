@@ -86,8 +86,6 @@ def solve(input, folds):
         for col in range(len(copy[0])):
             if copy[row][col] == 1:
                 count += 1
-    # print(find_size(input))
-    j = 108
 
     return count
 
