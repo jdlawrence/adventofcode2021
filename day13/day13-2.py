@@ -81,9 +81,7 @@ def solve(input, folds):
 
     # print answer:
     for row in range(len(copy)):
-        print(' '.join(copy[row]))
-        # for col in range(len(copy[0])):
-            # print
+        print(' '.join(copy[row][::-1])) # Reverse the list because of the way I ordered things
 
     # count dots
     count = 0
